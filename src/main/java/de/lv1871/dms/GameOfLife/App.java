@@ -34,7 +34,8 @@ public class App {
 
 	    // @formatter:off
 	    
-	    game.stream().collect(groupBy(Field::getY, mapToSign()))
+	    game.stream()
+	    	.collect(groupBy(Field::getY, mapToSign()))
 		.entrySet()
 		.stream()
 		.sorted(byYCoord())
