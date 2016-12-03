@@ -22,10 +22,6 @@ import java.util.stream.Collectors;
 
 import de.lv1871.dms.GameOfLife.domain.Field;
 
-/**
- * Hello world!
- *
- */
 public class App {
     public static void main(String[] args) throws InterruptedException {
 
