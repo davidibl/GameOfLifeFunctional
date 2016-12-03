@@ -1,38 +1,35 @@
 package de.lv1871.dms.GameOfLife;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
+
+import org.junit.Test;
+
+public class AppTest {
+
+    private static String ZEBRA = "Zebra";
+    private static String APFEL = "Apfel";
+    private static String BIRNE = "Birne";
+    private static String DOJO = "Dojo";
+    private static String WEIHNACHTEN = "Weihnachten";
+
+    @Test
+    private void testEqual() {
+	List<String> liste = Arrays.asList(ZEBRA, APFEL, BIRNE, DOJO, WEIHNACHTEN);
+	String filter = ZEBRA;
+
+	String result = liste.stream().filter(value -> value.equals(filter)).findFirst().get();
+
+	result = liste.stream().filter(equal(filter)).findFirst().get();
+
+	assertEquals(ZEBRA, result);
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    private static <T> Predicate<T> equal(T filter) {
+	return (value) -> Objects.equals(value, filter);
     }
 }
