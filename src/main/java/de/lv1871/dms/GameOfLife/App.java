@@ -28,13 +28,13 @@ public class App {
 	int xSize = 10;
 	int ySize = 5;
 
-	List<Field> game = initRandomGame(xSize, ySize);
+	List<Field> gameBoard = initRandomGame(xSize, ySize);
 
 	while (true) {
 
 	    // @formatter:off
 	    
-	    game.stream()
+	    gameBoard.stream()
 	    	.collect(groupBy(Field::getY, mapToSign()))
 		.entrySet()
 		.stream()
@@ -44,10 +44,10 @@ public class App {
 		.peek(System.out::print)
 		.collect(Collectors.toList());
 	    
-	    game = game.stream()
+	    gameBoard = gameBoard.stream()
     		.map(toDeadField(which(isAlive(), and(), 
-    			which(hasLessThanTwo(livingNeighboursIn(game)), or(), hasMoreThanThree(livingNeighboursIn(game))))))
-    		.map(toAliveField(which(isDead(), and(), hasExactThree(livingNeighboursIn(game)))))
+    			which(hasLessThanTwo(livingNeighboursIn(gameBoard)), or(), hasMoreThanThree(livingNeighboursIn(gameBoard))))))
+    		.map(toAliveField(which(isDead(), and(), hasExactThree(livingNeighboursIn(gameBoard)))))
     		.collect(Collectors.toList());
         	
 	    // @formatter:on
@@ -71,7 +71,7 @@ public class App {
     }
 
     private static Function<List<String>, String> createTextLine() {
-	return (list) -> list.stream().collect(Collectors.joining("")) + "\r\n";
+	return (list) -> list.stream().collect(Collectors.joining(""));
     }
 
     private static Predicate<Field> hasMoreThanThree(Function<Field, List<Field>> neighbours) {
