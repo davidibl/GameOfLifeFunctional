@@ -23,67 +23,67 @@ import java.util.stream.Collectors;
 import de.lv1871.dms.GameOfLife.domain.Field;
 
 public class App {
-    public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException {
 
-	int xSize = 10;
-	int ySize = 5;
+		int xSize = 10;
+		int ySize = 5;
 
-	List<Field> gameBoard = initRandomGame(xSize, ySize);
+		List<Field> gameBoard = initRandomGame(xSize, ySize);
 
-	while (true) {
+		while (true) {
 
-	    // @formatter:off
-	    
-	    gameBoard.stream()
-	    	.collect(groupBy(Field::getY, mapToSign()))
-		.entrySet()
-		.stream()
-		.sorted(byYCoord())
-		.map(toSingleLine())
-		.map(createTextLine())
-		.peek(System.out::print)
-		.collect(Collectors.toList());
-	    
-	    gameBoard = gameBoard.stream()
-    		.map(toDeadField(which(isAlive(), and(), 
-    			which(hasLessThanTwo(livingNeighboursIn(gameBoard)), or(), hasMoreThanThree(livingNeighboursIn(gameBoard))))))
-    		.map(toAliveField(which(isDead(), and(), hasExactThree(livingNeighboursIn(gameBoard)))))
-    		.collect(Collectors.toList());
-        	
-	    // @formatter:on
+			// @formatter:off
+		    
+		    gameBoard.stream()
+		    	.collect(groupBy(Field::getY, mapToSign()))
+			.entrySet()
+			.stream()
+			.sorted(byYCoord())
+			.map(toSingleLine())
+			.map(createTextLine())
+			.peek(System.out::print)
+			.collect(Collectors.toList());
+		    
+		    gameBoard = gameBoard.stream()
+	    		.map(toDeadField(which(isAlive(), and(), 
+	    			which(hasLessThanTwo(livingNeighboursIn(gameBoard)), or(), hasMoreThanThree(livingNeighboursIn(gameBoard))))))
+	    		.map(toAliveField(which(isDead(), and(), hasExactThree(livingNeighboursIn(gameBoard)))))
+	    		.collect(Collectors.toList());
+	        	
+		    // @formatter:on
 
-	    System.out.println();
-	    Thread.sleep(2000);
+			System.out.println();
+			Thread.sleep(2000);
+		}
 	}
-    }
 
-    private static Comparator<Entry<Integer, List<String>>> byYCoord() {
-	return (entry1, entry2) -> Integer.compare(entry1.getKey(), entry2.getKey());
-    }
+	private static Comparator<Entry<Integer, List<String>>> byYCoord() {
+		return (entry1, entry2) -> Integer.compare(entry1.getKey(), entry2.getKey());
+	}
 
-    private static Function<Entry<Integer, List<String>>, List<String>> toSingleLine() {
-	return (entry) -> entry.getValue();
-    }
+	private static Function<Entry<Integer, List<String>>, List<String>> toSingleLine() {
+		return (entry) -> entry.getValue();
+	}
 
-    private static Collector<Field, ?, Map<Integer, List<String>>> groupBy(Function<Field, Integer> supplier,
-	    Function<Field, String> mapper) {
-	return Collectors.groupingBy(supplier, Collectors.mapping(mapper, Collectors.toList()));
-    }
+	private static Collector<Field, ?, Map<Integer, List<String>>> groupBy(Function<Field, Integer> supplier,
+			Function<Field, String> mapper) {
+		return Collectors.groupingBy(supplier, Collectors.mapping(mapper, Collectors.toList()));
+	}
 
-    private static Function<List<String>, String> createTextLine() {
-	return (list) -> list.stream().collect(Collectors.joining(""));
-    }
+	private static Function<List<String>, String> createTextLine() {
+		return (list) -> list.stream().collect(Collectors.joining(""));
+	}
 
-    private static Predicate<Field> hasMoreThanThree(Function<Field, List<Field>> neighbours) {
-	return (field) -> neighbours.apply(field).size() > 3;
-    }
+	private static Predicate<Field> hasMoreThanThree(Function<Field, List<Field>> neighbours) {
+		return (field) -> neighbours.apply(field).size() > 3;
+	}
 
-    private static Predicate<Field> hasExactThree(Function<Field, List<Field>> neighbours) {
-	return (field) -> neighbours.apply(field).size() == 3;
-    }
+	private static Predicate<Field> hasExactThree(Function<Field, List<Field>> neighbours) {
+		return (field) -> neighbours.apply(field).size() == 3;
+	}
 
-    private static Predicate<Field> hasLessThanTwo(Function<Field, List<Field>> neighbours) {
-	return (field) -> neighbours.apply(field).size() < 2;
-    }
+	private static Predicate<Field> hasLessThanTwo(Function<Field, List<Field>> neighbours) {
+		return (field) -> neighbours.apply(field).size() < 2;
+	}
 
 }
