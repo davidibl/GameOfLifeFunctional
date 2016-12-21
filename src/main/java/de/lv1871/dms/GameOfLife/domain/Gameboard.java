@@ -22,7 +22,12 @@ public class Gameboard {
 	}
 
 	public static Function<Field, List<Field>> livingNeighboursIn(List<Field> game) {
-		return (field) -> game.stream().filter(isLivingNeighbour(field)).collect(Collectors.toList());
+		// @formatter:off
+		return (field) -> game
+				.stream()
+				.filter(isLivingNeighbour(field))
+				.collect(Collectors.toList());
+		// @formatter:on
 	}
 
 }

@@ -44,17 +44,24 @@ public class App {
 			.peek(System.out::println)
 			.collect(Collectors.toList());
 		    
-		    gameBoard = gameBoard.stream()
-	    		.map(toDeadField(which(isAlive(), and(), 
-	    			which(hasLessThanTwo(livingNeighboursIn(gameBoard)), or(), hasMoreThanThree(livingNeighboursIn(gameBoard))))))
-	    		.map(toAliveField(which(isDead(), and(), hasExactThree(livingNeighboursIn(gameBoard)))))
-	    		.collect(Collectors.toList());
+		    gameBoard = iterateGameboard(gameBoard);
 	        	
 		    // @formatter:on
 
 			System.out.println();
 			Thread.sleep(1000);
 		}
+	}
+
+	private static List<Field> iterateGameboard(List<Field> gameboard) {
+		// @formatter:off
+		return gameboard
+				.stream()
+	    		.map(toDeadField(which(isAlive(), and(), 
+		    			which(hasLessThanTwo(livingNeighboursIn(gameboard)), or(), hasMoreThanThree(livingNeighboursIn(gameboard))))))
+	    		.map(toAliveField(which(isDead(), and(), hasExactThree(livingNeighboursIn(gameboard)))))
+	    		.collect(Collectors.toList());
+		// @formatter:on
 	}
 
 	private static Comparator<Entry<Integer, List<String>>> byYCoord() {
