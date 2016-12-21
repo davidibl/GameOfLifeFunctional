@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Game {
+public class Gameboard {
 
 	public static List<Field> initRandomGame(int xSize, int ySize) {
 		List<Field> game = new LinkedList<Field>();
