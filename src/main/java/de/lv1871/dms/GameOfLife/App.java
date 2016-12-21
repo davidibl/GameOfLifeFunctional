@@ -53,7 +53,7 @@ public class App {
 		    // @formatter:on
 
 			System.out.println();
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		}
 	}
 
