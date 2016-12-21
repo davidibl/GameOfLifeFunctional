@@ -41,7 +41,7 @@ public class App {
 			.sorted(byYCoord())
 			.map(toSingleLine())
 			.map(createTextLine())
-			.peek(System.out::print)
+			.peek(System.out::println)
 			.collect(Collectors.toList());
 		    
 		    gameBoard = gameBoard.stream()

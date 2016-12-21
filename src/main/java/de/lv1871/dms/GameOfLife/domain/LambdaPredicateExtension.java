@@ -15,7 +15,7 @@ public class LambdaPredicateExtension {
 	}
 
 	public static <T> BiFunction<Predicate<T>, Predicate<T>, Predicate<T>> or() {
-		return (predicateLeft, predicateRight) -> predicateLeft.and(predicateRight);
+		return (predicateLeft, predicateRight) -> predicateLeft.or(predicateRight);
 	}
 
 }
