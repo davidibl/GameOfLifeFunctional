@@ -28,13 +28,13 @@ public class App {
 		int xSize = 10;
 		int ySize = 5;
 
-		List<Field> gameBoard = initRandomGame(xSize, ySize);
+		List<Field> gameboard = initRandomGame(xSize, ySize);
 
 		while (true) {
 
 			// @formatter:off
 		    
-		    gameBoard.stream()
+		    gameboard.stream()
 		    	.collect(groupBy(Field::getY, mapToSign()))
 			.entrySet()
 			.stream()
@@ -44,7 +44,7 @@ public class App {
 			.peek(System.out::println)
 			.collect(Collectors.toList());
 		    
-		    gameBoard = iterateGameboard(gameBoard);
+		    gameboard = iterateGameboard(gameboard);
 	        	
 		    // @formatter:on
 
