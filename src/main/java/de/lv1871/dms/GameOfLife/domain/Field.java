@@ -33,7 +33,7 @@ public class Field {
 	}
 
 	public static Predicate<Field> isDead() {
-		return (field) -> !field.getAlive();
+		return isAlive().negate();
 	}
 
 	public static Function<Field, Field> toDeadField(Predicate<Field> isFieldKillable) {
