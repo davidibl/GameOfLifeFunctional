@@ -37,19 +37,11 @@ public class Field {
 	}
 
 	public static Function<Field, Field> toDeadField(Predicate<Field> isFieldKillable) {
-		return (field) -> Optional.of(isFieldKillable).map(killField(field)).get();
+		return (field) -> Optional.of(field).filter(isFieldKillable.negate()).orElse(returnDeadField(field));
 	}
 
 	public static Function<Field, Field> toAliveField(Predicate<Field> isFieldKillable) {
-		return (field) -> Optional.of(isFieldKillable).map(lifeField(field)).get();
-	}
-
-	public static Function<Predicate<Field>, Field> killField(Field field) {
-		return (predicate) -> (predicate.test(field)) ? returnDeadField(field) : field;
-	}
-
-	public static Function<Predicate<Field>, Field> lifeField(Field field) {
-		return (predicate) -> (predicate.test(field)) ? returnAliveField(field) : field;
+		return (field) -> Optional.of(field).filter(isFieldKillable.negate()).orElse(returnAliveField(field));
 	}
 
 	public static Field returnAliveField(Field field) {

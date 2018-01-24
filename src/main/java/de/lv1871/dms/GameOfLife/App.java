@@ -25,8 +25,8 @@ import de.lv1871.dms.GameOfLife.domain.Field;
 public class App {
 	public static void main(String[] args) throws InterruptedException {
 
-		int xSize = 10;
-		int ySize = 5;
+		int xSize = 30;
+		int ySize = 15;
 
 		List<Field> gameboard = initRandomGame(xSize, ySize);
 
@@ -36,13 +36,13 @@ public class App {
 		    
 		    gameboard.stream()
 		    	.collect(groupBy(Field::getY, mapToSign()))
-			.entrySet()
-			.stream()
-			.sorted(byYCoord())
-			.map(toSingleLine())
-			.map(createTextLine())
-			.peek(System.out::println)
-			.collect(Collectors.toList());
+				.entrySet()
+				.stream()
+				.sorted(byYCoord())
+				.map(toSingleLine())
+				.map(createTextLine())
+				.peek(System.out::println)
+				.collect(Collectors.toList());
 		    
 		    gameboard = iterateGameboard(gameboard);
 	        	
