@@ -29,7 +29,7 @@ public class Field {
 	}
 
 	public static Predicate<Field> isAlive() {
-		return (field) -> field.getAlive();
+		return Field::getAlive;
 	}
 
 	public static Predicate<Field> isDead() {
@@ -37,18 +37,28 @@ public class Field {
 	}
 
 	public static Function<Field, Field> toDeadField(Predicate<Field> isFieldKillable) {
-		return (field) -> Optional.of(field).filter(isFieldKillable.negate()).orElse(returnDeadField(field));
+		// @formatter:off
+		return (field) -> Optional
+							.of(field)
+							.filter(isFieldKillable.negate())
+							.orElse(newDeadField(field));
+		// @formatter:on
 	}
 
-	public static Function<Field, Field> toAliveField(Predicate<Field> isFieldKillable) {
-		return (field) -> Optional.of(field).filter(isFieldKillable.negate()).orElse(returnAliveField(field));
+	public static Function<Field, Field> toAliveField(Predicate<Field> isFieldViable) {
+		// @formatter:off
+		return (field) -> Optional
+							.of(field)
+							.filter(isFieldViable.negate())
+							.orElse(newAliveField(field));
+		// @formatter:on
 	}
 
-	public static Field returnAliveField(Field field) {
+	public static Field newAliveField(Field field) {
 		return new Field(field.getX(), field.getY(), true);
 	}
 
-	public static Field returnDeadField(Field field) {
+	public static Field newDeadField(Field field) {
 		return new Field(field.getX(), field.getY(), false);
 	}
 
